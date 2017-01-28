@@ -11,4 +11,8 @@ router.get('/ebert', function(req, res){
 	res.render('home', null);
 });
 
+router.get('/profile/:id', function(req, res){
+
+});
+
 module.exports = router;
