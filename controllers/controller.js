@@ -8,7 +8,7 @@ router.get('/', function(req, res){
 });
 
 router.get('/ebert', function(req, res){
-	res.render('home', null);
+	res.render('movies', null);
 });
 
 module.exports = router;
