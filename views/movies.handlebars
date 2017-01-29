@@ -22,44 +22,27 @@
     </div>
 
 	<div class="panel-body">
-    <ul>
-		{{#each movie}}
 
-        <li>{{this.movieName}}</li>
-        <li>{{this.movieTime}}</li>
-        <li>{{this.location}}</li>
+		{{#each events}}
+
+		<div class="row">
+			<div class="col col-lg-9">
+			    <ul>
+        		<li>Movie Name: {{this.movieName}}</li>
+        		<li>Show Time: {{this.movieTime}}</li>
+        		<li>Location: {{this.location}}</li>
+        		</ul>
+             </div>
+
+			<div class="col col-lg-3">
                 <form action="/{{this.id}}?_method=PUT" method="POST">
-                    <input type="hidden" name="burgerID" value="{{this.id}}">
+                    <input type="hidden" name="MovieID" value="{{this.id}}">
                     <button type="submit">I want to watch this</button>
                 </form>
+			</div>
+		</div>
 
-
+		</br>
 		{{/each}}
-    </ul>
       </div>
 </div>
-
-
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h2 class="panel-title">Ready to eat!</h2>
-      </div>
-
-      <div class="panel-body">
-        <ul>
-          {{#each burger}}
-              {{#unless this.devoured}}
-
-              <li>{{this.burger_name}}
-                <form action="/{{this.id}}?_method=PUT" method="POST">
-                    <input type="hidden" name="burgerID" value="{{this.id}}">
-                    <button type="submit">eat</button>
-                </form>
-              </li>
-
-
-            {{/unless}}
-          {{/each}}
-        </ul>
-      </div>
-    </div>
