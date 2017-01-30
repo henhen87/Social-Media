@@ -4,25 +4,26 @@ var router = express.Router();
 var db = require('../models');
 
 router.get('/', function(req, res){
-	res.redirect('/movies');
+	res.redirect('/friend-book');
 });
 
-router.get('/ebert', function(req, res){
-	//res.render('movies', null);
+router.get('/friend-book', function(req, res){
+	res.render('home', null);
 });
 
-router.get('/movies', function(req, res){
-	db.events.findAll({}).then(function(dbEvents) {
-    	var hbsObject = {
-			events: dbEvents
-		};
-      	console.log(hbsObject);
-    	res.render("movies", hbsObject);
-    });
+router.get('/friend-book/profile', function(req, res){
+	res.render('profile');
 });
 
-router.get('/profile/:id', function(req, res){
+router.get('/friend-book/register', function(res, res){
+	res.render('register');
+});
 
+router.post('/friend-book/register', function(req, res){
+	console.log(req.body);
+	db.user.create(req.body).then(function(data){
+		res.json(data);
+	});
 });
 
 module.exports = router;
