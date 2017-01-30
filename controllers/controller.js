@@ -21,7 +21,7 @@ router.get('/friend-book/register', function(res, res){
 
 router.post('/friend-book/register', function(req, res){
 	console.log(req.body);
-	db.user.create(req.body).then(function(data){
+	db.users.create(req.body).then(function(data){
 		res.json(data);
 	});
 });
