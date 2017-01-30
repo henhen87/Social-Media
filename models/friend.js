@@ -1,26 +1,27 @@
 module.exports = function(sequelize, DataTypes){
 	var friends = sequelize.define('Friends', {
-		//friendID: DataTypes.INTEGER,
 		status: DataTypes.STRING
 	},
 
     {
-      // We're saying that we want our Author to have Posts
       classMethods: {
         associate: function(models) {
-          // When we delete an Author, we'll also delete their Posts "cascade"
-          // An Author (foreignKey) is required or a Post can't be made
+          //we're adding two constraints here. Both friendID and userID have to be IDs in the user table, otherwise an insert will FAIL.
+          //the onDelete cascade will remove both records of the user's friends and other users that have that first user as a friend.
           friends.belongsTo(models.Users, {
-            	foreignKey: 'user_id', 
-            	targetKey: 'id', 
-            	allowNull: false, 
-            	onDelete: "cascade"
-          }, {
-          		foreignKey: 'friend_id', 
+            	foreignKey: 'userID',
             	targetKey: 'id', 
             	allowNull: false, 
             	onDelete: "cascade"
           });
+
+          friends.belongsTo(models.Users, {
+              foreignKey: 'friendID',
+              targetKey: 'id', 
+              allowNull: false, 
+              onDelete: "cascade"
+          });
+
         }
       }
 

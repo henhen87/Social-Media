@@ -9,7 +9,8 @@ module.exports = function(sequelize, DataTypes){
 	{
 		classMethod: {
 			associate: function(models) {
-				users.hasMany(models.Friends);
+				users.hasMany(models.Friends, {as: "userID"});
+				users.hasMany(models.Friends, {as: "friendID"});
 			}
 		}
 

@@ -1,0 +1,46 @@
+<div class="page-header" style="margin-left: 150px;">
+  <h1>friends</h1>
+  
+</div>
+
+<div class="panel panel-default">
+	<div class="panel panel-body">
+	<div class="input-group">
+  		<span class="input-group-addon" id="movieSearch">
+  			<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+  		</span>
+  		<input type="text" class="form-control" placeholder="" aria-describedby="basic-addon1">
+	</div>
+	</div>
+</div>
+
+<button type="button" class="btn btn-default">Search</button>
+
+<div class="panel panel-default">
+	<div class="panel-heading">
+    	<h2 class="panel-title">friends in system</h2>
+    </div>
+
+	<div class="panel-body">
+
+		{{#each Users}}
+
+		<div class="row">
+			<div class="col col-lg-9">
+			    <ul>
+        		<li>Name: {{this.userName}}</li>
+        	</ul>
+      </div>
+
+			<div class="col col-lg-3">
+                <form method="POST">
+                    <input type="hidden" name="FriendID" value="{{this.id}}">
+                    <button type="submit">I want to be friends</button>
+                </form>
+			</div>
+		</div>
+
+		</br>
+		{{/each}}
+      </div>
+</div>
