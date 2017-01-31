@@ -1,14 +1,28 @@
- <form action="/friend-book/register" method="POST">
-	  <input id="name" name="name" type="text" class="form-control-1" placeholder="Enter Name" aria-describedby="basic-addon1">
+<div class="container">
 
-	  <input id="username" name="username" type="text" class="form-control-2" placeholder="Enter Username" aria-describedby="basic-addon2">
+	<form action="/friend-book/register" method="POST" class="form-signin">
+		<h2 class="form-register-heading">Book Face Registration</h2>
+		<div class="form-group">
+		    <label for="inputUsername" class="sr-only">Username</label>
+		    <input type="text" name="username" id="inputUsername" class="form-control" placeholder="Username" required autofocus>
+		</div>
+		<div class="form-group">
+		    <label for="inputPassword" class="sr-only">Password</label>
+		    <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
+		 </div>
+		 <div class="form-group">
+		    <label for="inputPassword2" class="sr-only">Password</label>
+		    <input type="password" name="password2" id="inputPassword2" class="form-control" placeholder="Password" required>
+		 </div>
+		 <div class="form-group">
+		    <label for="inputEmail" class="sr-only">Email</label>
+		    <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email" required>
+		 </div>
+		 <div class="form-group">
+		    <label for="inputDescription" class="sr-only">Description</label>
+		    <input type="text" name="description" id="inputDescription" class="form-control" placeholder="Type something" required>
+		 </div>
+		<button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+	</form>
 
-	  <input id="password" name="password" type="password" class="form-control-3" placeholder="Enter Password" aria-describedby="basic-addon3">
-	  <input id="password2" name="password2" type="password" class="form-control-4" placeholder="Enter Password" aria-describedby="basic-addon4">
-
-	  <input id="email" name="email" type="email" class="form-control-5" placeholder="Enter Email" aria-describedby="basic-addon5">
-
-	  <input id="description" name="description" type="text" class="form-control-6" placeholder="Description" aria-describedby="basic-addon6">
-
-	  <button id="register" type="submit">Register</button>
-  </form>
+</div> <!-- /container -->

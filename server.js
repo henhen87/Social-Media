@@ -1,18 +1,20 @@
-
+// *****************************************************************************
+// Server.js - This file is the initial starting point for the Node/Express server.
+//
+// ******************************************************************************
+// *** Dependencies
+// =============================================================
 var express = require("express");
 var bodyParser = require("body-parser");
 var session = require("express-session");
-var passport = require('passport')
-  , LocalStrategy = require('passport-local').Strategy;
 
-var db = require("./models");
-
-var routes = require('./controllers/controller.js');
-
+// Sets up the Express App
+// =============================================================
 var app = express();
 var PORT = process.env.PORT || 8080;
 
 // Requiring our models for syncing
+var db = require("./models");
 
 // Sets up the Express app to handle data parsing
 app.use(bodyParser.json());
@@ -20,28 +22,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.text());
 app.use(bodyParser.json({ type: "application/vnd.api+json" }));
 
-// Static directory
-app.use(express.static("./public"));
-
 app.use(session({
-	secret: "duuuuuuuuuuuddde",
+	secret: "duuuuuuuuuDE",
 	resave: false,
 	saveUninitialized: true
 }));
 
-app.use(function (req, res, next) {
-
-	var user = req.session.user;
-	
-	if (!user) {
-		user = req.session.user = {};
-	}
-	
-	res.sendStatus(200);
-});
-
-app.use(passport.initialize());
-app.use(passport.session());
+var passport = require('passport')
+  , LocalStrategy = require('passport-local').Strategy;
 
 //Passport JS ***********************************************************
 passport.use(new LocalStrategy(
@@ -60,8 +48,29 @@ passport.use(new LocalStrategy(
 ));
 
 
+
+//************************************************************************
+
+// Static directory
+app.use(express.static("./public"));
+
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+var routes = require('./controllers/controller.js');
 app.use('/', routes);
 
+app.use(function (req, res, next) {
+
+	var user = req.session.user;
+	
+	if (!user) {
+		user = req.session.user = {};
+	}
+	
+	res.sendStatus(200);
+});
 
 
 

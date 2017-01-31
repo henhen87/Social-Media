@@ -7,7 +7,6 @@ var router = express.Router();
 var db = require('../models');
 
 router.get('/', function(req, res){
-	console.log("HI")
 	res.redirect('/friend-book');
 });
 
