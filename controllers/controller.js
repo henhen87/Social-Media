@@ -13,16 +13,29 @@ router.get('/friend-book', function(req, res){
 	res.render('home', null);
 });
 
+router.get('/friend-book/personresults', function(req, res){
+	
+	res.render('personresults', null)
+
+	
+
+	
+});
+
+
 router.post('/friend-book/search', function(req, res){
 	console.log(req.body.name);
+
 	db.users.findAll({
-    where:{
-        name: req.body.name
-        }
-}).then(function(data){
-    res.json(data)
-    });
-	res.render('personresults', null);
+	    where:{
+	        name: req.body.name
+       	}
+	}).then(function(data){
+	    res.json(data)
+
+	});
+
+	
 });
 
 router.get('/friend-book/profile', function(req, res){
