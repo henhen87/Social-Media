@@ -13,30 +13,42 @@ router.get('/friend-book', function(req, res){
 	res.render('home', null);
 });
 
-router.get('/friend-book/personresults', function(req, res){
-	
-	res.render('personresults', null)
+router.get('/friend-book/personresults/:name', function(req, res){
 
-	
-
-	
-});
-
-
-router.post('/friend-book/search', function(req, res){
-	console.log(req.body.name);
-
+	var name = req.params.name;
+	console.log('name',name)
 	db.users.findAll({
 	    where:{
-	        name: req.body.name
+	        name: name
        	}
 	}).then(function(data){
-	    res.json(data)
+		console.log(data)
+	    res.render('personresults', {usersFound: data})
 
 	});
 
 	
+
+	
+
+	
 });
+
+
+// router.post('/friend-book/search', function(req, res){
+// 	console.log(req.body.name);
+
+// 	db.users.findAll({
+// 	    where:{
+// 	        name: req.body.name
+//        	}
+// 	}).then(function(data){
+// 		console.log(data)
+// 	    res.json(data)
+
+// 	});
+	
+// });
 
 router.get('/friend-book/profile', function(req, res){
 	res.render('profile');
