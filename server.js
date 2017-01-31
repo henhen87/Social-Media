@@ -6,6 +6,7 @@
 // =============================================================
 var express = require("express");
 var bodyParser = require("body-parser");
+var session = require("express-session");
 
 // Sets up the Express App
 // =============================================================
@@ -23,6 +24,25 @@ app.use(bodyParser.json({ type: "application/vnd.api+json" }));
 
 // Static directory
 app.use(express.static("./public"));
+
+app.use(session({
+	secret: "keyboard cat",
+	resave: false,
+	saveUninitialized: true
+}));
+
+app.use(function (req, res, next) {
+	var user = req.session.user;
+
+	if (!user) {
+		user = req.session.user = {};
+	}
+
+	res.sendStatus(200);
+});
+
+
+
 
 var exphbs = require("express-handlebars");
 

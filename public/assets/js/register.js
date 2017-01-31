@@ -25,7 +25,10 @@ $(document).ready(function(){
 			description: $('#description').val().trim()
 		}
 
-		$.post('/friend-book/register', userInfo).then()
+		$.post('/friend-book/register', userInfo).then(function(data) {
+			console.log(data);
+			window.location.href = data.url;
+		})
 	});
 
 });
