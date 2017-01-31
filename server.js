@@ -1,20 +1,18 @@
-// *****************************************************************************
-// Server.js - This file is the initial starting point for the Node/Express server.
-//
-// ******************************************************************************
-// *** Dependencies
-// =============================================================
+
 var express = require("express");
 var bodyParser = require("body-parser");
 var session = require("express-session");
+var passport = require('passport')
+  , LocalStrategy = require('passport-local').Strategy;
 
-// Sets up the Express App
-// =============================================================
+var db = require("./models");
+
+var routes = require('./controllers/controller.js');
+
 var app = express();
 var PORT = process.env.PORT || 8080;
 
 // Requiring our models for syncing
-var db = require("./models");
 
 // Sets up the Express app to handle data parsing
 app.use(bodyParser.json());
@@ -22,8 +20,28 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.text());
 app.use(bodyParser.json({ type: "application/vnd.api+json" }));
 
-var passport = require('passport')
-  , LocalStrategy = require('passport-local').Strategy;
+// Static directory
+app.use(express.static("./public"));
+
+app.use(session({
+	secret: "duuuuuuuuuuuddde",
+	resave: false,
+	saveUninitialized: true
+}));
+
+app.use(function (req, res, next) {
+
+	var user = req.session.user;
+	
+	if (!user) {
+		user = req.session.user = {};
+	}
+	
+	res.sendStatus(200);
+});
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 //Passport JS ***********************************************************
 passport.use(new LocalStrategy(
@@ -42,29 +60,8 @@ passport.use(new LocalStrategy(
 ));
 
 
-app.use(passport.initialize());
-app.use(passport.session());
+app.use('/', routes);
 
-//************************************************************************
-
-// Static directory
-app.use(express.static("./public"));
-
-app.use(session({
-	secret: "keyboard cat",
-	resave: false,
-	saveUninitialized: true
-}));
-
-app.use(function (req, res, next) {
-	var user = req.session.user;
-
-	if (!user) {
-		user = req.session.user = {};
-	}
-
-	res.sendStatus(200);
-});
 
 
 
@@ -75,9 +72,7 @@ app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
 // Routes =============================================================
-var routes = require('./controllers/controller.js');
 
-app.use('/', routes);
 
 
 // Syncing our sequelize models and then starting our express app

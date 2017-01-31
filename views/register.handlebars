@@ -1,14 +1,14 @@
- <form>
-	  <input id="name" type="text" class="form-control-1" placeholder="Enter Name" aria-describedby="basic-addon1">
+ <form action="/friend-book/register" method="POST">
+	  <input id="name" name="name" type="text" class="form-control-1" placeholder="Enter Name" aria-describedby="basic-addon1">
 
-	  <input id="username" type="text" class="form-control-2" placeholder="Enter Username" aria-describedby="basic-addon2">
+	  <input id="username" name="username" type="text" class="form-control-2" placeholder="Enter Username" aria-describedby="basic-addon2">
 
-	  <input id="password" type="password" class="form-control-3" placeholder="Enter Password" aria-describedby="basic-addon3">
-	  <input id="password2" type="password" class="form-control-4" placeholder="Enter Password" aria-describedby="basic-addon4">
+	  <input id="password" name="password" type="password" class="form-control-3" placeholder="Enter Password" aria-describedby="basic-addon3">
+	  <input id="password2" name="password2" type="password" class="form-control-4" placeholder="Enter Password" aria-describedby="basic-addon4">
 
-	  <input id="email" type="email" class="form-control-5" placeholder="Enter Email" aria-describedby="basic-addon5">
+	  <input id="email" name="email" type="email" class="form-control-5" placeholder="Enter Email" aria-describedby="basic-addon5">
 
-	  <input id="description" type="text" class="form-control-6" placeholder="Description" aria-describedby="basic-addon6">
+	  <input id="description" name="description" type="text" class="form-control-6" placeholder="Description" aria-describedby="basic-addon6">
 
-	  <button id="register">Register</button>
+	  <button id="register" type="submit">Register</button>
   </form>

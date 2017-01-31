@@ -7,6 +7,7 @@ var router = express.Router();
 var db = require('../models');
 
 router.get('/', function(req, res){
+	console.log("HI")
 	res.redirect('/friend-book');
 });
 
@@ -44,26 +45,26 @@ router.post('/friend-book/register', function(req, res){
 			description: data.description
 		};
 
-		sess = req.session.user;
+		// sess = req.session.user;
 
-		//res.json(data);
-//		res.render("profile", req.session.user);
+		// res.json(data);
+		res.render("profile", req.session.user);
 
 	});
 
 	//console.log("trying redirect");
-	res.json({ url: "/friend-book/profile", session: req.session.user });
+	// res.json({ url: "/friend-book/profile"});
 
 //	res.redirect("/friend-book/profile");
 });
 
 
 
-router.post('/friend-book/login',
-  passport.authenticate('local', { successRedirect: '/',
-                                   failureRedirect: '/friend-book/login',
-                                   failureFlash: true })
-);
+// router.post('/friend-book/login',
+//   // passport.authenticate('local', { successRedirect: '/',
+//   //                                  failureRedirect: '/friend-book/login',
+//   //                                  failureFlash: true })
+// );
 
 // app.post('/friend-book/register',
 //   passport.authenticate('local', { successRedirect: '/',
