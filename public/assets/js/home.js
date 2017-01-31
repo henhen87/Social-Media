@@ -1,8 +1,12 @@
-$('#personSearch').on('click', function(){
+$(document).ready(function(){
+$('#searchperson').on('click', function(){
 	var personSearch  = $('#inputpersonsearch').val().trim();
-	console.log("asdfs",personSearch);
+	console.log("frontend personserch",personSearch);
 
-$.post( "/usersearch", { name: personSearch} );
+	$.post( "/friend-book/search", { name: personSearch} );
 
 
 })
+
+});
+
