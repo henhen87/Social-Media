@@ -22,6 +22,7 @@ router.get('/friend-book/register', function(res, res){
 router.post('/friend-book/register', function(req, res){
 	console.log(req.body);
 	db.users.create(req.body).then(function(data){
+		console.log("register data", data);
 		res.json(data);
 	});
 });
