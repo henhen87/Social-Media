@@ -32,29 +32,49 @@ router.post('/friend-book/register', function(req, res){
 
 	console.log(req.body);
 
-	db.users.create(req.body).then(function(data){
-		console.log("register data", data);
-		
-		console.log("poop", data.id);
-		req.session.user = {
-			id: data.id,
-			name: data.name,
-			username: data.username,
-			email: data.email,
-			description: data.description
-		};
+	var name = req.body.name;
+	var username = req.body.username;
+	var email = req.body.email;
+	var password = req.body.password;
+	var password2 = req.body.password2;
+	var description = req.body.description
 
-		// sess = req.session.user;
+	//Using express validator*************************************************************************
 
-		// res.json(data);
-		res.render("profile", req.session.user);
+	req.checkBody('name', 'Must type in name.').notEmpty();
+	req.checkBody('username', 'Must type in Username.').notEmpty();
+	req.checkBody('email', 'Must type in email.').notEmpty();
+	req.checkBody('email', 'Invalid Email').isEmail();
+	req.checkBody('password', 'Must type in password.').notEmpty();
+	req.checkBody('password2', 'Passwords do not match.').equals(req.body.password);
+	req.checkBody('description', 'Must type in something about yourself.').notEmpty();
 
-	});
+	var errors = req.validationErrors();
 
-	//console.log("trying redirect");
-	// res.json({ url: "/friend-book/profile"});
+	//If there are errors, render the errors
+	if(errors){
+		res.render('register', {
+			errors: errors
+		});
+	}else{
+	//if no errors, create user in database then render user data onto profile page.
+		db.users.create(req.body).then(function(data){
+			console.log("register data", data);
+			
+			console.log("poop", data.id);
+			req.session.user = {
+				id: data.id,
+				name: data.name,
+				username: data.username,
+				email: data.email,
+				description: data.description
+			};
 
-//	res.redirect("/friend-book/profile");
+			res.render("profile", req.session.user);
+
+		});
+	}
+//***************************************************************************************************
 });
 
 

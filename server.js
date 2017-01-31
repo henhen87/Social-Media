@@ -7,6 +7,7 @@
 var express = require("express");
 var bodyParser = require("body-parser");
 var session = require("express-session");
+var expressValidator = require("express-validator");
 
 // Sets up the Express App
 // =============================================================
@@ -27,6 +28,27 @@ app.use(session({
 	resave: false,
 	saveUninitialized: true
 }));
+
+//Loading express validator to check for proper registration values in input boxes***********************
+
+app.use(expressValidator({
+  errorFormatter: function(param, msg, value) {
+      var namespace = param.split('.')
+      , root    = namespace.shift()
+      , formParam = root;
+
+    while(namespace.length) {
+      formParam += '[' + namespace.shift() + ']';
+    }
+    return {
+      param : formParam,
+      msg   : msg,
+      value : value
+    };
+  }
+}));
+
+//********************************************************************************************************
 
 var passport = require('passport')
   , LocalStrategy = require('passport-local').Strategy;
