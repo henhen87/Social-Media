@@ -22,6 +22,31 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.text());
 app.use(bodyParser.json({ type: "application/vnd.api+json" }));
 
+var passport = require('passport')
+  , LocalStrategy = require('passport-local').Strategy;
+
+//Passport JS ***********************************************************
+passport.use(new LocalStrategy(
+  function(username, password, done) {
+    db.users.findOne({ username: username, password: password }, function (err, user) {
+      if (err) { return done(err); }
+      if (!user) {
+        return done(null, false, { message: 'Incorrect username.' });
+      }
+      if (!user.validPassword(password)) {
+        return done(null, false, { message: 'Incorrect password.' });
+      }
+      return done(null, user);
+    });
+  }
+));
+
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+//************************************************************************
+
 // Static directory
 app.use(express.static("./public"));
 

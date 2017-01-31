@@ -2,7 +2,7 @@ var sess;
 
 
 var express = require('express');
-
+var passport = require('passport');
 var router = express.Router();
 var db = require('../models');
 
@@ -20,12 +20,18 @@ router.get('/friend-book/profile', function(req, res){
 	res.render('profile', sess);
 });
 
+router.get('/friend-book/login', function(req, res){
+	res.render('login');
+});
+
 router.get('/friend-book/register', function(res, res){
 	res.render('register');
 });
 
 router.post('/friend-book/register', function(req, res){
+
 	console.log(req.body);
+
 	db.users.create(req.body).then(function(data){
 		console.log("register data", data);
 		
@@ -52,19 +58,19 @@ router.post('/friend-book/register', function(req, res){
 });
 
 
-/*router.get('/friend-book/profile', function(res, res){
-	res.render('profile');
-});
-*/
+
+router.post('/friend-book/login',
+  passport.authenticate('local', { successRedirect: '/',
+                                   failureRedirect: '/friend-book/login',
+                                   failureFlash: true })
+);
+
+// app.post('/friend-book/register',
+//   passport.authenticate('local', { successRedirect: '/',
+//                                    failureRedirect: '/login',
+//                                    failureFlash: true })
+// );
 
 module.exports = router;
 
 
-/*
-    db.sequelizedBurgers.findAll({}).then(function(dbBurgers) {
-    	var hbsObject = {
-			burger: dbBurgers
-		};
-      	console.log(hbsObject);
-    	res.render("index", hbsObject);
- */
