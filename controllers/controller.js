@@ -25,13 +25,7 @@ router.get('/friend-book/personresults/:name', function(req, res){
 		console.log(data)
 	    res.render('personresults', {usersFound: data})
 
-	});
-
-	
-
-	
-
-	
+	});	
 });
 
 
