@@ -1,5 +1,8 @@
 var express = require('express');
+
 var bodyParser = require('body-parser')
+
+var passport = require('passport');
 
 var router = express.Router();
 var db = require('../models');
@@ -29,23 +32,14 @@ router.get('/friend-book/personresults/:name', function(req, res){
 });
 
 
-// router.post('/friend-book/search', function(req, res){
-// 	console.log(req.body.name);
 
-// 	db.users.findAll({
-// 	    where:{
-// 	        name: req.body.name
-//        	}
-// 	}).then(function(data){
-// 		console.log(data)
-// 	    res.json(data)
-
-// 	});
-	
-// });
 
 router.get('/friend-book/profile', function(req, res){
 	res.render('profile');
+});
+
+router.get('/friend-book/login', function(req, res){
+	res.render('login');
 });
 
 router.get('/friend-book/register', function(res, res){
@@ -53,11 +47,24 @@ router.get('/friend-book/register', function(res, res){
 });
 
 router.post('/friend-book/register', function(req, res){
+
 	console.log(req.body);
+
 	db.users.create(req.body).then(function(data){
-		res.json(data);
+		console.log("register data", data);
+		// res.json(data);
+		res.render()
 	});
+
 });
+
+
+router.post('/friend-book/login',
+  passport.authenticate('local', { successRedirect: '/',
+                                   failureRedirect: '/friend-book/login',
+                                   failureFlash: true })
+);
+
 
 module.exports = router;
 
