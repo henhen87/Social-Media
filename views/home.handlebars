@@ -1,14 +1,8 @@
 <div class="header" style="margin-left: 150px;">
-  <ul class="nav nav-tabs">
-	  <li role="presentation" class="active"><a href="/friend-book/login">Login</a></li>
-	  <li role="presentation"><a href="/friend-book/register">Register</a></li>
-  </ul>
-
-  <h1>Friend Book</h1>
   
-  <form>
-	  <input type="text" class="form-control-1" placeholder="Enter Name" aria-describedby="basic-addon1">
-	  <span class="input-group-addon-1" id="basic-addon1"><button>Search User</button></span>
+  <form action="/friend-book/search/user" method="POST">
+	  <input type="text" class="form-control-1" name="name" placeholder="Enter Name" aria-describedby="basic-addon1">
+	  <span class="input-group-addon-1" id="basic-addon1"><button type="submit">Search User</button></span>
   </form>
 
 </div>

@@ -7,7 +7,9 @@
 var express = require("express");
 var bodyParser = require("body-parser");
 var session = require("express-session");
+var passport = require('passport');
 var expressValidator = require("express-validator");
+var flash = require("connect-flash");
 
 // Sets up the Express App
 // =============================================================
@@ -50,28 +52,18 @@ app.use(expressValidator({
 
 //********************************************************************************************************
 
-var passport = require('passport')
-  , LocalStrategy = require('passport-local').Strategy;
+app.use(flash());
 
-//Passport JS ***********************************************************
-passport.use(new LocalStrategy(
-  function(username, password, done) {
-    db.users.findOne({ username: username, password: password }, function (err, user) {
-      if (err) { return done(err); }
-      if (!user) {
-        return done(null, false, { message: 'Incorrect username.' });
-      }
-      if (!user.validPassword(password)) {
-        return done(null, false, { message: 'Incorrect password.' });
-      }
-      return done(null, user);
-    });
-  }
-));
+app.use(function(req, res, next){
+	//res.locals has global scope.
+	res.locals.succes_msg = req.flash('succes_msg');
+	res.locals.error_msg = req.flash('error_msg');
+	res.locals.error = req.flash('error');
+	next(); //Needed to call the next here to call the next app.use middleware. Before
+	//I didnt have this, the app.use('/', routes) was never getting executed since the next() was not being 
+	//called.
+});
 
-
-
-//************************************************************************
 
 // Static directory
 app.use(express.static("./public"));
