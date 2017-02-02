@@ -37,12 +37,17 @@ router.get('/friend-book/test', function(req, res){
 		}]
 	}).then(function(dbData) {
 		var hbsObject = {
-			userInfo: dbData
+			userInfo: req.session.user,
+			friendInfo: dbData
 		}
 		//console.log("THIS IS DBDATA", dbData);
 		//console.log("THIS IS DBDATA.Friends", dbData.Friends);
 		//res.render('test', hbsObject);
-		res.json(dbData);
+		//res.json(dbData);
+		console.log("MY SELF", hbsObject.userInfo);
+		console.log("MY FRIENDS", hbsObject.friendInfo);
+		//res.json(hbsObject);
+		res.render('test', hbsObject);
 
 	});
 });

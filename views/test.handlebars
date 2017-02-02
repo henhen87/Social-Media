@@ -1,15 +1,29 @@
-test
-{{this}}
-{{this.userInfo.name}}
-{{#each userInfo}}
+<div class="row">
+  <div class="col-sm-6 col-md-4">
+    <div class="thumbnail">
+      <img style="float:left;" src="/assets/images/hen.jpg" alt="cat" class="img-circle" width="400px" height="300px/">
+      <div class="caption">
+        <h3 style="padding-top: 15px;">Name: {{this.userInfo.name}}</h3>
+        <h2>Email Address: {{this.userInfo.email}}</h2>
+        <h2>Description: {{this.userInfo.description}} </h2>
+      </div>
+      <div>
+        <h1> {{this.userInfo.username}}'s Wall</h1>
+        <div>
+          
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
 
+  <div class="col-sm-6 col-md-4">
+	friend info
 
-	
-		<li>user: {{this.name}}</li>
-		<li>username: {{this.username}}</li>
-		<li>email: {{this.email}}</li>
-		<li>description: {{this.description}}</li>
-	
-
-{{/each}}
-
+	{{#each friendInfo}}
+	<ul>
+		<li>user:{{this.friendInfo.user}}</li>
+	</ul>
+	{{/each}}
+  </div>
+</div>
