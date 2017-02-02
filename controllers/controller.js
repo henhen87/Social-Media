@@ -11,10 +11,49 @@ router.get('/', function(req, res){
 	res.redirect('/friend-book');
 });
 
+router.get('/friend-book/search', function(req, res){
+		
+	res.render('search', null);
+});
+
 router.get('/friend-book', function(req, res){
 		
 	res.render('home', null);
 });
+
+router.post('/friend-book/home', function(req, res){
+	console.log(req.body.post)
+
+db.events.create({
+    body: req.body.post
+  })
+    // pass the result of our call
+  .then(function(post) {
+      // log the result to our terminal/bash window
+    console.log(post);
+      // redirect
+    res.end();
+  });
+		
+	
+});
+
+router.get('/friend-book/all', function(req, res){
+
+db.events.findAll({
+    burger_name: req.body.post
+  })
+    // pass the result of our call
+  .then(function(post) {
+      // log the result to our terminal/bash window
+    console.log(post);
+      // redirect
+    res.send(post)
+  });
+		
+	
+});
+
 
 router.get('/friend-book/personresults/:name', function(req, res){
 
@@ -26,7 +65,7 @@ router.get('/friend-book/personresults/:name', function(req, res){
        	}
 	}).then(function(data){
 		console.log(data)
-	    res.render('personresults', {usersFound: data})
+	    res.render('personresults', {userspost: data})
 
 	});	
 });

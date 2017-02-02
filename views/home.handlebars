@@ -1,19 +1,44 @@
-
 <div class="container">
 <div class="header" style="margin-left: 150px;">
   <ul class="nav nav-tabs">
-  <li role="presentation" class="active"><a href="/friend-book/">Search</a></li>
+  <li role="presentation" class="active"><a href="/friend-book/">Home</a></li>
+  <li role="presentation" ><a href="/friend-book/search">Search</a></li>
 	  <li role="presentation"><a href="/friend-book/login">Login</a></li>
 	  <li role="presentation"><a href="/friend-book/register">Register</a></li>
   </ul>
 
-  <h1>Friend Book</h1>
-  
-  <form>
-	  <input id="inputpersonsearch" type="text" class="form-control-1" placeholder="Enter Name" aria-describedby="basic-addon1">
-	  <span class="input-group-addon-1" id="searchperson"><button>Search User</button></span>
-  </form>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">News Feed</h3>
+  </div>
+  <div class="panel-body">
+    <div class="row">
+  <div class="col-lg-12">
+    <div class="input-group">
+      <input id="inputpost" type="text" class="form-control" placeholder="What's On Your Mind...">
+      <span class="input-group-btn">
+        <button id="post" class="btn btn-default" type="button">Post!</button>
+      </span>
+    </div><!-- /input-group -->
+  </div><!-- /.col-lg-6 -->
+</div><!-- /.row -->
+  </div>
+</div>
 
+<div id="messages" class="media" style="display: none;">
+  <div class="media-left media-middle">
+    <a href="#">
+     
+    </a>
+  </div>
+ 
+  <div class="media-body">
+    <h4 class="media-heading"></h4>
+   
+  </div>
+ 
+</div>
+
+ 
 </div>
 </div>
-
