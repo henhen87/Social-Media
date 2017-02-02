@@ -32,16 +32,35 @@ router.get('/friend-book/test', function(req, res){
 		where: {
 			id: req.session.user.id
 		},
-		include: [db.Friends]
+		include: [{
+			model: db.Users, as: 'Friend' //find all users associated as friends
+		}]
 	}).then(function(dbData) {
 		var hbsObject = {
 			userInfo: dbData
 		}
-		console.log("THIS IS DBDATA", hbsObject);
-		res.render('test', hbsObject);
+		//console.log("THIS IS DBDATA", dbData);
+		//console.log("THIS IS DBDATA.Friends", dbData.Friends);
+		//res.render('test', hbsObject);
+		res.json(dbData);
 
 	});
 });
+
+
+/*
+User.findAll({
+  include: [{
+    model: Project,
+    through: {
+      attributes: ['createdAt', 'startedAt', 'finishedAt'],
+      where: {completed: true}
+    }
+  }]
+});
+*/
+
+
 
 router.post('/friend-book/register', function(req, res){
 	console.log(req.body);

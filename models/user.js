@@ -15,6 +15,10 @@ module.exports = function(sequelize, DataTypes) {
         associate: function(models) {
           // Associating Author with Posts
           Users.hasMany(models.Friends);
+          Users.belongsToMany(Users, {
+          	as: 'Friend',
+          	through: 'Friends'
+          });
         }
       }
     });

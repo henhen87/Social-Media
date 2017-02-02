@@ -1,7 +1,6 @@
 module.exports = function(sequelize, DataTypes) {
   var Friends = sequelize.define("Friends", {
-    status: DataTypes.STRING,
-    friendID: DataTypes.INTEGER
+    status: DataTypes.STRING
   },
     {
       // We're saying that we want our Author to have Posts
