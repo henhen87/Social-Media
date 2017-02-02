@@ -59,7 +59,7 @@ $(document).ready(function() {
 
                                     if (data.length !== 0) {
 
-                                        for (var i = 0; i < data.length; i++) {
+                                        for (var i = data.length-1; i > -1; i--) {
 
                                             var row = $(".media-body");
                                             // row.addClass("media-body");
