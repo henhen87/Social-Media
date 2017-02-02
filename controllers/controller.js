@@ -1,6 +1,5 @@
 var sess;
 
-
 var express = require('express');
 var passport = require('passport');
 var router = express.Router();
@@ -24,12 +23,27 @@ router.get('/friend-book/login', function(req, res){
 	res.render('login');
 });
 
-router.get('/friend-book/register', function(res, res){
+router.get('/friend-book/register', function(req, res){
 	res.render('register');
 });
 
-router.post('/friend-book/register', function(req, res){
+router.get('/friend-book/test', function(req, res){
+	db.Users.findAll({
+		where: {
+			id: req.session.user.id
+		},
+		include: [db.Friends]
+	}).then(function(dbData) {
+		var hbsObject = {
+			userInfo: dbData
+		}
+		console.log("THIS IS DBDATA", hbsObject);
+		res.render('test', hbsObject);
 
+	});
+});
+
+router.post('/friend-book/register', function(req, res){
 	console.log(req.body);
 
 	var name = req.body.name;
@@ -58,10 +72,10 @@ router.post('/friend-book/register', function(req, res){
 		});
 	}else{
 	//if no errors, create user in database then render user data onto profile page.
-		db.users.create(req.body).then(function(data){
+		db.Users.create(req.body).then(function(data){
 			console.log("register data", data);
 			
-			console.log("poop", data.id);
+			//console.log("poop", data.id);
 			req.session.user = {
 				id: data.id,
 				name: data.name,
@@ -70,6 +84,7 @@ router.post('/friend-book/register', function(req, res){
 				description: data.description
 			};
 
+			//res.render("profile");
 			res.render("profile", req.session.user);
 
 		});
