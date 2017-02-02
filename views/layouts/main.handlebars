@@ -14,8 +14,8 @@
           <ul class="nav nav-pills pull-right">
             	<li role="presentation"><a href="/">Home</a></li>
             {{#if user}}
-            	<li role="presentation"><a href="/friend-book/profile">Profile</a></li>
             	<li role="presentation"><a href="/friend-book/logout">Logout</a></li>
+            	<li style="width:200px; padding-top:9px; text-align:center" role="presentation">Logged in as <a style="float:right; padding:0px;margin:0px;" href="/friend-book/profile">{{this.user.username}}</a></li>
             {{else}}
             	<li role="presentation"><a href="/friend-book/register">Register</a></li>
             	<li role="presentation"><a href="/friend-book/login">Login</a></li>
