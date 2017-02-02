@@ -131,47 +131,26 @@ router.post('/friend-book/register', function(req, res){
 });
 
 
-passport.use(new LocalStrategy(
-  function(username, password, done) {
-    db.users.findOne({ 
-    	where: {
-    		username: username
-    	}
-    }, function (err, user) {
-      if (err) { return done(err); }
-      if (!user) {
-        return done(null, false, { message: 'Incorrect username.' });
-      }
-      if (!user.validPassword(password)) {
-        return done(null, false, { message: 'Incorrect password.' });
-      }
-      return done(null, user);
-    });
-  }
-));
-
-passport.serializeUser(function(user, done) {
-  done(null, user.id);
-});
-
-passport.deserializeUser(function(id, done) {
-  db.users.findById(id, function(err, user) {
-    done(err, user);
-  });
-});
 
 
 router.post('/friend-book/login',
   passport.authenticate('local', 
   	{ 
-  		successRedirect: '/',
+  		successRedirect: '/friend-book',
         failureRedirect: '/friend-book/login',
         failureFlash: true 
-    }),function(req, res){
-  		// res.redirect('/friend-book');
-  		res.redirect('/friend-book/profile' + req.user.username);
-  }
-);
+    })
+  );
+
+router.get('/friend-book/logout', function(req, res){
+	req.logOut();
+	console.log('req.session in get method', req.session);
+	console.log('req.session.user in get method', req.session.user);
+	// req.session.destroy(function(err){
+		res.redirect('/friend-book/login');
+		
+	// });
+});
 
 // app.post('/friend-book/register',
 //   passport.authenticate('local', { successRedirect: '/',

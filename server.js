@@ -8,6 +8,7 @@ var express = require("express");
 var bodyParser = require("body-parser");
 var session = require("express-session");
 var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
 var expressValidator = require("express-validator");
 var flash = require("connect-flash");
 
@@ -52,6 +53,75 @@ app.use(expressValidator({
 
 //********************************************************************************************************
 
+
+
+// Static directory
+app.use(express.static("./public"));
+
+passport.use(new LocalStrategy(
+  function(username, password, done) {
+    db.users.findOne({ 
+    	where: {
+    		username: username
+    	}
+    
+
+      // if (!user.validPassword(password)) {
+      //   return done(null, false, { message: 'Incorrect password.' });
+      // }
+      // return done(null, user);
+    }).then(function(user){
+    	// if(err) {return done(err);}
+    	if (!user) {
+        	return done(null, false, { message: 'Incorrect username.' });
+      	}
+      	//Instance methods can only be used when certain instances of sequelized are used such as create. Not
+		//all instances of sequelize can use instance methods.
+    	user.passwordVerify(password, user.password, function(err, match){
+    		console.log('\n\n')
+    		console.log("err was", err);
+    		console.log('\n\n')
+    		console.log("match was", match);
+
+    		if (err) {
+    			done(err);
+    		}
+
+    		if (match) {
+    			return done(null, user);
+    		} else {
+    			return done(null, false, {message: 'Invalid Password'});
+    		}
+    	});
+    }).catch(function(err){
+    	console.log('failed on passport authentication', err);
+    	done(err);
+    });
+  }
+));
+
+passport.serializeUser(function(user, done) {
+  console.log("user in serializeUser", user);
+  console.log("HEEEYYYYYYYY");
+  done(null, user);
+});
+
+passport.deserializeUser(function(user, done) {
+  // console.log("id in serializeUser", id);
+  console.log("deserializeUserHIIIIIIIIIIII");
+  //This was not working because I was not using sequelize syntax and just using the passport js document. I had to put
+  //the function that I pasted from document, inside the 'then' promise that is part of sequelize syntax.
+  // db.users.findById(id).then(function(user) {
+  	console.log('deserializeUseruser', user)
+    done(null, user);
+  // }).catch(function(err){
+  	// done(err);
+  // });
+});
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.use(flash());
 
 app.use(function(req, res, next){
@@ -59,32 +129,31 @@ app.use(function(req, res, next){
 	res.locals.succes_msg = req.flash('succes_msg');
 	res.locals.error_msg = req.flash('error_msg');
 	res.locals.error = req.flash('error');
+	//This had to be req.user instead of req.session, since user is what gets returns from the passport
+	//deserialize function.
+	res.locals.user = req.user || null;
+	console.log('SUCCES MESSAGE', res.locals.succes_msg);
+	console.log('locals user', res.locals.user);
+	console.log('session one', req.session);
+	console.log('session user', req.session.user);
+	console.log('req.user', req.user);
 	next(); //Needed to call the next here to call the next app.use middleware. Before
 	//I didnt have this, the app.use('/', routes) was never getting executed since the next() was not being 
 	//called.
 });
-
-
-// Static directory
-app.use(express.static("./public"));
-
-
-app.use(passport.initialize());
-app.use(passport.session());
-
 var routes = require('./controllers/controller.js');
 app.use('/', routes);
 
-app.use(function (req, res, next) {
+// app.use(function (req, res, next) {
 
-	var user = req.session.user;
+// 	var user = req.session.user;
 	
-	if (!user) {
-		user = req.session.user = {};
-	}
+// 	if (!user) {
+// 		user = req.session.user = {};
+// 	}
 	
-	res.sendStatus(200);
-});
+// 	res.sendStatus(200);
+// });
 
 
 
@@ -99,7 +168,7 @@ app.set("view engine", "handlebars");
 
 
 // Syncing our sequelize models and then starting our express app
-db.sequelize.sync({ force: true }).then(function() {
+db.sequelize.sync({ force: false }).then(function() {
   app.listen(PORT, function() {
     console.log("App listening on PORT " + PORT);
   });
