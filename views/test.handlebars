@@ -18,11 +18,13 @@
   </div>
 
   <div class="col-sm-6 col-md-4">
-	friend info
+	friends:
 
-	{{#each friendInfo}}
+	{{#each userFriend}}
 	<ul>
-		<li>user:{{this.friendInfo.user}}</li>
+		<li>user:{{this.name}}</li>
+		<li>email:{{this.email}}</li>
+		<li>description:{{this.description}}</li>
 	</ul>
 	{{/each}}
   </div>
