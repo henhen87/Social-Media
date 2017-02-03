@@ -7,7 +7,7 @@
 		  <div class="media-body">
 		    <h4 class="media-heading">{{this.name}}</h4>
 		    <h4 class="media-heading">{{this.email}}</h4>
-		    <form method="POST" action="/friend-book/profile">
+		    <form method="POST" action="/friend-book/profile?member_id={{this.id}}">
                 <input type="hidden" name="profileID" value="{{this.id}}">
                 <button type="submit">Profile Page</button>
             </form>

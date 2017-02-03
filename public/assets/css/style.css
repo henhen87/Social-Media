@@ -5,7 +5,25 @@ body {
 }
 
 .media-object{
-  width: 520px;
+  width: 500px;
+}
+
+.profileName{
+  padding-top: 20px;
+  font-size: 30px;
+}
+.profileEmail, .profileDescription{
+  font-size: 25px;
+}
+
+.col-lg-9{
+  margin-left: 87px;
+}
+
+.wall{
+  margin-left: 10px;
+  font-size: 25px;
+  text-decoration: underline;
 }
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
