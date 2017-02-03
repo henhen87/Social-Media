@@ -18,6 +18,13 @@ module.exports = function(sequelize, DataTypes){
           	as: 'Friend',
           	through: 'Friends'
           });
+          users.hasMany(models.Messages);
+          users.belongsToMany(users, {
+          	as: 'Sender',
+          	through: 'Messages',
+          	unique: false
+          });
+
         }
       },
 

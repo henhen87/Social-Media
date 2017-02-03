@@ -19,15 +19,19 @@ router.get('/friend-book/profile', function(req, res){
 		},
 		include: [{
 			model: db.users, as: 'Friend' //find all users associated as friends
+		}, {
+			model: db.users, as: 'Sender'
 		}]
 	}).then(function(dbData) {
 		var hbsObject = {
 			userInfo: req.session.user,
 			friendInfo: dbData,
-			userFriend: dbData[0].Friend
+			userFriend: dbData[0].Friend,
+			userMsg: dbData[0].Sender
 		}
 			console.log(dbData);
 
+		//res.json(hbsObject);
 		res.render('profile', hbsObject);
 	});
 });

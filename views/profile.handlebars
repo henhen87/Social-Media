@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-sm-6 col-md-4">
+  <div class="col-sm-4 col-md-4">
     <div class="thumbnail">
       <img style="float:left;" src="/assets/images/hen.jpg" alt="cat" class="img-circle" width="400px" height="300px/">
       <div class="caption">
@@ -16,4 +16,31 @@
       </div>
     </div>
   </div>
+
+  <div class="col-sm-4 col-md-4">
+    {{this.userInfo.username}}'s friends:
+
+    {{#each userFriend}}
+    <ul>
+      <li>user:{{this.name}}</li>
+      <li>email:{{this.email}}</li>
+      <li>description:{{this.description}}</li>
+    </ul>
+    {{/each}}
+  </div>
+
+  <div class="col-sm-4 col-md-4">
+    {{this.userInfo.username}}'s messages:
+
+    {{#each userMsg}}
+    <ul>
+      <li>from: {{this.name}} </li>
+      <li>message: {{this.Messages.message}} </li>
+      <li>createdAt: {{this.Messages.createdAt}} </li>
+    </ul>
+    {{/each}}
+  </div>
+
+
+
 </div>
