@@ -10,6 +10,18 @@ module.exports = function(sequelize, DataTypes){
 	}, {
 		//Instance methods can only be used when certain instances of sequelized are used such as create. Not
 		//all instances of sequelize can use instance methods.
+		classMethods: {
+        associate: function(models) {
+          // Associating Author with Posts
+          users.hasMany(models.Friends);
+          users.belongsToMany(users, {
+          	as: 'Friend',
+          	through: 'Friends'
+          });
+        }
+      },
+
+
 		instanceMethods: {
 			passwordVerify: function(userPW, hash, callback){
 				//the parameter userPW and hash are both passwords passed in from the passport Localstrategy

@@ -13,8 +13,23 @@ router.get('/friend-book', function(req, res){
 });
 
 router.get('/friend-book/profile', function(req, res){
+	db.users.findAll({
+		where: {
+			id: req.session.user.id
+		},
+		include: [{
+			model: db.users, as: 'Friend' //find all users associated as friends
+		}]
+	}).then(function(dbData) {
+		var hbsObject = {
+			userInfo: req.session.user,
+			friendInfo: dbData,
+			userFriend: dbData[0].Friend
+		}
+			console.log(dbData);
 
-	res.render('profile');
+		res.render('profile', hbsObject);
+	});
 });
 
 router.post('/friend-book/profile', function(req, res){
