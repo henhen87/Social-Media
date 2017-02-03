@@ -2,6 +2,7 @@ var sess;
 
 var express = require('express');
 var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
 var router = express.Router();
 var db = require('../models');
 
@@ -10,13 +11,12 @@ router.get('/', function(req, res){
 });
 
 router.get('/friend-book', function(req, res){
-	res.render('home', null);
+	res.render('home');
 });
 
 router.get('/friend-book/profile', function(req, res){
-	console.log("trying redirect", sess);
 
-	res.render('profile', sess);
+	res.render('profile');
 });
 
 router.get('/friend-book/login', function(req, res){
@@ -55,6 +55,21 @@ router.get('/friend-book/test', function(req, res){
 	});
 });
 
+router.post('/friend-book/search/user', function(req, res){
+	db.users.findAll({
+		where: {
+			name: req.body.name
+		}
+	}).then(function(data){
+		var userResults = {
+			people: data
+		}
+		res.render('searchedUser', userResults);
+	})
+});
+
+router.post('/friend-book/register', function(req, res){
+
 
 /*
 User.findAll({
@@ -90,6 +105,33 @@ router.post('/friend-book/register', function(req, res){
 	req.checkBody('password2', 'Passwords do not match.').equals(req.body.password);
 	req.checkBody('description', 'Must type in something about yourself.').notEmpty();
 
+	//Alternate method
+
+   	  // req.checkBody({
+
+  //       'username': {
+  //           notEmpty: true,
+  //           errorMessage: 'Username is required'
+  //       },
+
+  //       'email': {
+  //           notEmpty: true,
+  //           isEmail: {
+  //               errorMessage: 'Invalid Email Address'
+  //           },
+  //           errorMessage: 'Email is required'
+  //       },
+
+  //       'password': {
+  //           notEmpty: true,
+  //           errorMessage: 'Password is required'
+  //       },
+
+  //       'password_confirmation': {
+  //           notEmpty: true,
+  //           errorMessage: 'Password Confirmation is required'
+  //       }
+
 	var errors = req.validationErrors();
 
 	//If there are errors, render the errors
@@ -114,18 +156,61 @@ router.post('/friend-book/register', function(req, res){
 			//res.render("profile");
 			res.render("profile", req.session.user);
 
-		});
+		// db.users.findOne({
+		// 	where: {
+		// 		username: req.body.username,
+		// 		email: req.body.email
+		// 	}
+		// }).then(function(data){
+		// 	if(data){
+
+		// 	}else{
+
+		// 	}
+		// })
+			db.users.create(req.body).then(function(data){
+				console.log("register data", data);
+				
+				console.log("poop", data.id);
+				req.session.user = {
+					id: data.id,
+					name: data.name,
+					username: data.username,
+					email: data.email,
+					description: data.description
+				};
+
+				req.flash('success_msg', 'Success! Welcome to Book Face!');
+
+				// res.render("profile", req.session.user);
+				res.redirect('/friend-book/login')
+
+			});
 	}
 //***************************************************************************************************
 });
 
 
 
-// router.post('/friend-book/login',
-//   // passport.authenticate('local', { successRedirect: '/',
-//   //                                  failureRedirect: '/friend-book/login',
-//   //                                  failureFlash: true })
-// );
+
+router.post('/friend-book/login',
+  passport.authenticate('local', 
+  	{ 
+  		successRedirect: '/friend-book',
+        failureRedirect: '/friend-book/login',
+        failureFlash: true 
+    })
+  );
+
+router.get('/friend-book/logout', function(req, res){
+	req.logOut();
+	console.log('req.session in get method', req.session);
+	console.log('req.session.user in get method', req.session.user);
+	// req.session.destroy(function(err){
+		res.redirect('/friend-book/login');
+		
+	// });
+});
 
 // app.post('/friend-book/register',
 //   passport.authenticate('local', { successRedirect: '/',
