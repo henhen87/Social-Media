@@ -25,17 +25,23 @@ router.get('/friend-book/register', function(req, res){
 	res.render('register');
 });
 
+router.get('/friend-book/search/results', function(req, res){
+	res.render('searchedUser');
+});
+
 router.post('/friend-book/search/user', function(req, res){
+	console.log('req.body', req.body);
 	db.users.findAll({
 		where: {
 			name: req.body.name
 		}
 	}).then(function(data){
-		var userResults = {
-			people: data
-		}
-		res.render('searchedUser', userResults);
-	})
+		// var userResults = {
+		// 	people: data
+		// }
+		// res.render('searchedUser', userResults);
+		res.json()
+	});
 });
 
 router.post('/friend-book/register', function(req, res){
