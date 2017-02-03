@@ -70,7 +70,7 @@ router.post('/friend-book/search/user', function(req, res){
 
 router.post('/friend-book/register', function(req, res){
 
-
+});
 /*
 User.findAll({
   include: [{
@@ -105,33 +105,6 @@ router.post('/friend-book/register', function(req, res){
 	req.checkBody('password2', 'Passwords do not match.').equals(req.body.password);
 	req.checkBody('description', 'Must type in something about yourself.').notEmpty();
 
-	//Alternate method
-
-   	  // req.checkBody({
-
-  //       'username': {
-  //           notEmpty: true,
-  //           errorMessage: 'Username is required'
-  //       },
-
-  //       'email': {
-  //           notEmpty: true,
-  //           isEmail: {
-  //               errorMessage: 'Invalid Email Address'
-  //           },
-  //           errorMessage: 'Email is required'
-  //       },
-
-  //       'password': {
-  //           notEmpty: true,
-  //           errorMessage: 'Password is required'
-  //       },
-
-  //       'password_confirmation': {
-  //           notEmpty: true,
-  //           errorMessage: 'Password Confirmation is required'
-  //       }
-
 	var errors = req.validationErrors();
 
 	//If there are errors, render the errors
@@ -141,34 +114,9 @@ router.post('/friend-book/register', function(req, res){
 		});
 	}else{
 	//if no errors, create user in database then render user data onto profile page.
-		db.Users.create(req.body).then(function(data){
-			console.log("register data", data);
-			
+
 			//console.log("poop", data.id);
-			req.session.user = {
-				id: data.id,
-				name: data.name,
-				username: data.username,
-				email: data.email,
-				description: data.description
-			};
-
-			//res.render("profile");
-			res.render("profile", req.session.user);
-
-		// db.users.findOne({
-		// 	where: {
-		// 		username: req.body.username,
-		// 		email: req.body.email
-		// 	}
-		// }).then(function(data){
-		// 	if(data){
-
-		// 	}else{
-
-		// 	}
-		// })
-			db.users.create(req.body).then(function(data){
+			db.Users.create(req.body).then(function(data){
 				console.log("register data", data);
 				
 				console.log("poop", data.id);
