@@ -19,6 +19,21 @@ router.get('/friend-book/profile', function(req, res){
 	res.render('profile');
 });
 
+router.post('/friend-book/profile', function(req, res){
+	db.users.findOne({
+		where: {
+			id: req.body.profileID
+		}
+	}).then(function(data){
+		console.log("profile data", data);
+		var userObj = {
+			theData: data
+		}
+		res.render('profile', userObj);
+		
+	});
+});
+
 router.get('/friend-book/login', function(req, res){
 	res.render('login');
 });
@@ -56,6 +71,7 @@ router.get('/friend-book/test', function(req, res){
 });
 
 router.post('/friend-book/search/user', function(req, res){
+	console.log('req.body', req.body);
 	db.users.findAll({
 		where: {
 			name: req.body.name
@@ -65,7 +81,8 @@ router.post('/friend-book/search/user', function(req, res){
 			people: data
 		}
 		res.render('searchedUser', userResults);
-	})
+		// res.json()
+	});
 });
 
 router.post('/friend-book/register', function(req, res){
