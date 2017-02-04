@@ -12,15 +12,6 @@ var LocalStrategy = require('passport-local').Strategy;
 var expressValidator = require("express-validator");
 var flash = require("connect-flash");
 
-
-
-// app.set('views', './views');
-// app.use(express.static('./public'));
-// app.engine('html', require('ejs').renderFile);
-
-// const S3_BUCKET = process.env.S3_BUCKET;
-// Sets up the Express App
-// =============================================================
 var app = express();
 var PORT = process.env.PORT || 8080;
 
@@ -148,7 +139,6 @@ app.use(function(req, res, next){
       description: req.user.description
     };
   }
-  
   	console.log('SUCCES MESSAGE', res.locals.succes_msg);
 	console.log('locals user', res.locals.user);
 	console.log('session one', req.session);
@@ -158,6 +148,7 @@ app.use(function(req, res, next){
 	//I didnt have this, the app.use('/', routes) was never getting executed since the next() was not being 
 	//called.
 });
+
 var routes = require('./controllers/controller.js');
 app.use('/', routes);
 
