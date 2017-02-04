@@ -11,7 +11,7 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var expressValidator = require("express-validator");
 var flash = require("connect-flash");
-const aws = require('aws-sdk');
+// const aws = require('aws-sdk');
 
 
 // app.set('views', './views');
@@ -148,15 +148,8 @@ app.use(function(req, res, next){
       description: req.user.description
     };
   }
-  
 
-
-
-
-
-
-
-  console.log('SUCCES MESSAGE', res.locals.succes_msg);
+  	console.log('SUCCES MESSAGE', res.locals.succes_msg);
 	console.log('locals user', res.locals.user);
 	console.log('session one', req.session);
 	console.log('session user', req.session.user);
@@ -165,6 +158,7 @@ app.use(function(req, res, next){
 	//I didnt have this, the app.use('/', routes) was never getting executed since the next() was not being 
 	//called.
 });
+
 var routes = require('./controllers/controller.js');
 app.use('/', routes);
 
