@@ -259,8 +259,8 @@ router.post('/friend-book/requests', function(req, res) {
 		console.log("To Email Req", req.body.friendReqEmail);
 		email.send(toEmail, function(){
 			// res.redirect('/contact');	
+			res.redirect('/friend-book/profile');
 		});
-		res.redirect('/friend-book/profile');
 	});
 });
 
