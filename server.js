@@ -11,7 +11,7 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var expressValidator = require("express-validator");
 var flash = require("connect-flash");
-const aws = require('aws-sdk');
+//const aws = require('aws-sdk');
 
 
 // app.set('views', './views');

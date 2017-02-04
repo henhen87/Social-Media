@@ -13,6 +13,7 @@ module.exports = function(sequelize, DataTypes){
 		classMethods: {
         associate: function(models) {
           // Associating Author with Posts
+          users.hasMany(models.events);
           users.hasMany(models.Friends);
           users.belongsToMany(users, {
           	as: 'Friend',
