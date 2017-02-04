@@ -255,9 +255,10 @@ router.post('/friend-book/requests', function(req, res) {
 		console.log(data);
 		//res.json(data)
 		var toEmail = req.body.friendReqEmail;
+		var toEmailName = req.session.user.name;
 		console.log("To Email", toEmail);
 		console.log("To Email Req", req.body.friendReqEmail);
-		email.send(toEmail, function(){
+		email.send(toEmail, toEmailName, function(){
 			// res.redirect('/contact');	
 			res.redirect('/friend-book/profile');
 		});
