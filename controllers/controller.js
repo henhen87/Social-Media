@@ -3,6 +3,7 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var router = express.Router();
 var db = require('../models');
+var email = require('../mail/email');
 
 router.get('/', function(req, res){
 	res.redirect('/friend-book');
@@ -252,7 +253,13 @@ router.post('/friend-book/requests', function(req, res) {
 		FriendId: req.body.FriendID
 	}).then(function(data){
 		console.log(data);
-		//res.json(data);
+		//res.json(data)
+		var toEmail = req.body.friendReqEmail;
+		console.log("To Email", toEmail);
+		console.log("To Email Req", req.body.friendReqEmail);
+		email.send(toEmail, function(){
+			// res.redirect('/contact');	
+		});
 		res.redirect('/friend-book/profile');
 	});
 });

@@ -13,6 +13,7 @@
                 <button type="submit">Profile Page</button>
             </form>
 	        <form method="POST" action="/friend-book/requests">
+	        	<input type="hidden" name="friendReqEmail" value="{{this.email}}">
                 <input type="hidden" name="FriendID" value="{{this.id}}">
                 <button type="submit">I want to be friends</button>
             </form>

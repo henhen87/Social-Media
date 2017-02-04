@@ -11,20 +11,18 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var expressValidator = require("express-validator");
 var flash = require("connect-flash");
-var aws = require('aws-sdk');
+const aws = require('aws-sdk');
 
-var app = express();
 
-app.set('views', './views');
+// app.set('views', './views');
 // app.use(express.static('./public'));
-// Static directory
-app.use(express.static("./public"));
-app.engine('html', require('ejs').renderFile);
-var PORT = process.env.PORT || 8080;
+// app.engine('html', require('ejs').renderFile);
 
-const S3_BUCKET = process.env.S3_BUCKET;
+// const S3_BUCKET = process.env.S3_BUCKET;
 // Sets up the Express App
 // =============================================================
+var app = express();
+var PORT = process.env.PORT || 8080;
 
 // Requiring our models for syncing
 var db = require("./models");
@@ -64,6 +62,8 @@ app.use(expressValidator({
 
 
 
+// Static directory
+app.use(express.static("./public"));
 
 passport.use(new LocalStrategy(
   function(username, password, done) {
@@ -95,7 +95,6 @@ passport.use(new LocalStrategy(
     		}
 
     		if (match) {
-          //console.log('THIS GUY IS', user.id);
     			return done(null, user);
     		} else {
     			return done(null, false, {message: 'Invalid Password'});
@@ -139,23 +138,11 @@ app.use(function(req, res, next){
 	//This had to be req.user instead of req.session, since user is what gets returns from the passport
 	//deserialize function.
 	res.locals.user = req.user || null;
-	//console.log('SUCCES MESSAGE', res.locals.succes_msg);
-	//console.log('locals user', res.locals.user);
-	//console.log('session one', req.session);
-	//console.log('req.user', req.user);
-
-  if(req.user) {
-    req.session.user = {
-      id: req.user.id,
-      name: req.user.name,
-      username: req.user.username,
-      email: req.user.email,
-      description: req.user.description
-    };
-  };
-  console.log('session user', req.session.user);
-
-
+	console.log('SUCCES MESSAGE', res.locals.succes_msg);
+	console.log('locals user', res.locals.user);
+	console.log('session one', req.session);
+	console.log('session user', req.session.user);
+	console.log('req.user', req.user);
 	next(); //Needed to call the next here to call the next app.use middleware. Before
 	//I didnt have this, the app.use('/', routes) was never getting executed since the next() was not being 
 	//called.
