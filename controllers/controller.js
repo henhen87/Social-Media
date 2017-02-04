@@ -82,36 +82,7 @@ router.get('/friend-book/register', function(req, res){
 	res.render('register', {existsMsg: req.flash('Exists')});
 });
 
-// router.get('/sign-s3', (req, res) => {
-//   const s3 = new aws.S3();
-//   const fileName = req.query['file-name'];
-//   const fileType = req.query['file-type'];
-//   const s3Params = {
-//     Bucket: S3_BUCKET,
-//     Key: fileName,
-//     Expires: 60,
-//     ContentType: fileType,
-//     ACL: 'public-read'
-//   };
 
-//     s3.getSignedUrl('putObject', s3Params, (err, data) => {
-//     if(err){
-//       console.log(err);
-//       return res.end();
-//     }
-//     const returnData = {
-//       signedRequest: data,
-//       url: `https://${S3_BUCKET}.s3.amazonaws.com/${fileName}`
-//     };
-//     res.write(JSON.stringify(returnData));
-//     res.end();
-//   });
-// });
-
-
-// router.get('/friend-book/search/results', function(req, res){
-// 	res.render('searchedUser');
-// });
 
 router.post('/friend-book/search/user', function(req, res){
 	console.log('req.body', req.body);
@@ -245,11 +216,12 @@ router.get('/friend-book/logout', function(req, res){
 
 router.post('/friend-book/requests', function(req, res) {
 	console.log('post request');
-	// console.log('userID', req.session.user.id);
+
 	console.log('friendID', req.body.FriendID);
 
-	if(req.session.user){
+	console.log('friendID', req.body.FriendID);
 
+	if(req.session.user) {
 		db.Friends.create({
 			status: "friends",
 			userId: req.session.user.id,
@@ -266,15 +238,48 @@ router.post('/friend-book/requests', function(req, res) {
 				res.redirect('/friend-book/profile');
 			});
 		});
+
 	}else{
 
 		req.flash('friendPerm', 'Please login to add friends.');
 		res.redirect('/friend-book/login');
 	}
-
 });
 
+router.get('/friend-book/all', function(req, res){
 
+	db.events.findAll({
+	//    body: req.body.post,
+	where: {
+		userId: req.session.user.id
+	}
+  })
+    // pass the result of our call
+  .then(function(post) {
+      // log the result to our terminal/bash window
+    console.log('THIS IS MY POST', post);
+      // redirect
+    res.send(post)
+  });
+});
+
+router.post('/friend-book/home', function(req, res){
+	console.log(req.body.post)
+
+	db.events.create({
+		userId: req.session.user.id,
+    	body: req.body.post
+  	})
+    // pass the result of our call
+  	.then(function(post) {
+      // log the result to our terminal/bash window
+    console.log('I AM POSTING', post);
+      // redirect
+    res.end();
+  });
+		
+	
+});
 
 
 // app.post('/friend-book/register',

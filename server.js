@@ -11,16 +11,7 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var expressValidator = require("express-validator");
 var flash = require("connect-flash");
-// const aws = require('aws-sdk');
 
-
-// app.set('views', './views');
-// app.use(express.static('./public'));
-// app.engine('html', require('ejs').renderFile);
-
-// const S3_BUCKET = process.env.S3_BUCKET;
-// Sets up the Express App
-// =============================================================
 var app = express();
 var PORT = process.env.PORT || 8080;
 
