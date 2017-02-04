@@ -68,7 +68,7 @@ var sg = require('sendgrid')(process.env.SENDGRID_API_KEY);
 
 var email = {
 
-	send: function(toEmail, callback){
+	send: function(toEmail, toEmailName, callback){
 
 		var request = sg.emptyRequest({
 		  method: 'POST',
@@ -86,7 +86,7 @@ var email = {
 		    ],
 		    from: {
 		      email: "mailer_BookFace@stark-crag-86811.herokuapp.com",
-		      name: Sname
+		      name: toEmailName
 		    },
 		    content: [
 		      {
