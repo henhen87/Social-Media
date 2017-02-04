@@ -16,6 +16,11 @@ router.get('/friend-book/search', function(req, res){
 	res.render('search', null);
 });
 
+router.get('/friend-book/chat', function(req, res){
+		
+	res.render('chat', null);
+});
+
 router.get('/friend-book', function(req, res){
 		
 	res.render('home', null);
@@ -41,7 +46,7 @@ db.events.create({
 router.get('/friend-book/all', function(req, res){
 
 db.events.findAll({
-    burger_name: req.body.post
+    body: req.body.post
   })
     // pass the result of our call
   .then(function(post) {
@@ -65,7 +70,7 @@ router.get('/friend-book/personresults/:name', function(req, res){
        	}
 	}).then(function(data){
 		console.log(data)
-	    res.render('personresults', {userspost: data})
+	    res.render('personresults', {usersFound: data})
 
 	});	
 });
