@@ -132,10 +132,10 @@ app.use(function(req, res, next){
 	//This had to be req.user instead of req.session, since user is what gets returns from the passport
 	//deserialize function.
 	res.locals.user = req.user || null;
-	console.log('SUCCES MESSAGE', res.locals.succes_msg);
-	console.log('locals user', res.locals.user);
-	console.log('session one', req.session);
-	console.log('req.user', req.user);
+	//console.log('SUCCES MESSAGE', res.locals.succes_msg);
+	//console.log('locals user', res.locals.user);
+	//console.log('session one', req.session);
+	//console.log('req.user', req.user);
 
   if(req.user) {
     req.session.user = {
