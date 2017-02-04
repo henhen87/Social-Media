@@ -83,10 +83,6 @@ router.get('/friend-book/register', function(req, res){
 	res.render('register', {existsMsg: req.flash('Exists')});
 });
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 515139235611e5aad7624516987c23bd7e7a2aea
 
 router.post('/friend-book/search/user', function(req, res){
 	console.log('req.body', req.body);

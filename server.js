@@ -139,6 +139,7 @@ app.use(function(req, res, next){
       description: req.user.description
     };
   }
+
   	console.log('SUCCES MESSAGE', res.locals.succes_msg);
 	console.log('locals user', res.locals.user);
 	console.log('session one', req.session);
