@@ -71,8 +71,10 @@ router.post('/friend-book/profile', function(req, res){
 
 router.get('/friend-book/login', function(req, res){
 	var messages = {
-		success: req.flash('success_msg')
+		success: req.flash('success_msg'),
+		request: req.flash('friendPerm')
 	}
+	// req.flash('friendPerm', 'Please login to add friends.');
 	res.render('login', messages /*{messages: req.flash('success_msg')} //Alternate */);
 });
 
@@ -206,7 +208,7 @@ router.post('/friend-book/register', function(req, res){
 						description: data.description
 					};
 
-					req.flash('success_msg', 'Success! Welcome to Book Face!');
+					req.flash('success_msg', 'Success! Welcome to Book Face! Please login.');
 
 					// res.render("profile", req.session.user);
 					res.redirect('/friend-book/login')
@@ -265,6 +267,8 @@ router.post('/friend-book/requests', function(req, res) {
 			});
 		});
 	}else{
+
+		req.flash('friendPerm', 'Please login to add friends.');
 		res.redirect('/friend-book/login');
 	}
 
