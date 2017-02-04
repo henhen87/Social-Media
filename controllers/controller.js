@@ -164,7 +164,8 @@ router.post('/friend-book/login',
   	{ 
   		successRedirect: '/friend-book',
         failureRedirect: '/friend-book/login',
-        failureFlash: 'Invalid username and password. Self destructing in 5 seconds!' 
+        failureFlash: 'Invalid username and password. Self destructing in 5 seconds!',
+        successFlash: 'You have successfully logged in. Welcome to Book Face!' 
     })
   );
 
@@ -172,10 +173,10 @@ router.get('/friend-book/logout', function(req, res){
 	req.logOut();
 	console.log('req.session in get method', req.session);
 	console.log('req.session.user in get method', req.session.user);
-	// req.session.destroy(function(err){
+	req.session.destroy(function(err){
 		res.redirect('/friend-book/login');
 		
-	// });
+	});
 });
 
 // app.post('/friend-book/register',
