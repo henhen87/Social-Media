@@ -11,7 +11,7 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var expressValidator = require("express-validator");
 var flash = require("connect-flash");
-const aws = require('aws-sdk');
+// const aws = require('aws-sdk');
 
 
 // app.set('views', './views');
@@ -149,19 +149,6 @@ app.use(function(req, res, next){
 });
 var routes = require('./controllers/controller.js');
 app.use('/', routes);
-
-// app.use(function (req, res, next) {
-
-// 	var user = req.session.user;
-	
-// 	if (!user) {
-// 		user = req.session.user = {};
-// 	}
-	
-// 	res.sendStatus(200);
-// });
-
-
 
 
 var exphbs = require("express-handlebars");
