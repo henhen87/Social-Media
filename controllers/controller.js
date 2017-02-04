@@ -13,22 +13,56 @@ router.get('/friend-book', function(req, res){
 });
 
 router.get('/friend-book/profile', function(req, res){
+	db.users.findAll({
+		where: {
+			id: req.session.user.id
+		},
+		include: [{
+			model: db.users, as: 'Friend' //find all users associated as friends
+		}, {
+			model: db.users, as: 'Sender'
+		}]
+	}).then(function(dbData) {
+		var hbsObject = {
+			userInfo: req.session.user,
+			userFriend: dbData[0].Friend,
+			userMsg: dbData[0].Sender
+		}
+			console.log(dbData);
 
-	res.render('profile');
+		//res.json(hbsObject);
+		res.render('profile', hbsObject);
+	});
 });
 
 router.post('/friend-book/profile', function(req, res){
-	db.users.findOne({
+	db.users.findAll({
 		where: {
 			id: req.body.profileID
-		}
+		},
+		include: [{
+			model: db.users, as: 'Friend' //find all users associated as friends
+		}, {
+			model: db.users, as: 'Sender'
+		}]
+
 	}).then(function(data){
 		console.log("profile data", data);
+
+		var userData = {
+			id: data[0].id,
+			name: data[0].name,
+			username: data[0].username,
+			email: data[0].email,
+			description: data[0].description
+		};
+
 		var userObj = {
-			name: data.name,
-			email: data.email,
-			description: data.description
+			userInfo: userData,
+			userFriend: data[0].Friend,
+			userMsg: data[0].Sender
 		}
+		
 		res.render('profile', userObj);
 		
 	});
@@ -206,6 +240,26 @@ router.get('/friend-book/logout', function(req, res){
 	});
 });
 
+router.post('/friend-book/requests', function(req, res) {
+	console.log('post request');
+	console.log('userID', req.session.user.id);
+	console.log('friendID', req.body.FriendID);
+
+
+	db.Friends.create({
+		status: "friends",
+		userId: req.session.user.id,
+		FriendId: req.body.FriendID
+	}).then(function(data){
+		console.log(data);
+		//res.json(data);
+		res.redirect('/friend-book/profile');
+	});
+});
+
+
+
+
 // app.post('/friend-book/register',
 //   passport.authenticate('local', { successRedirect: '/',
 //                                    failureRedirect: '/login',
@@ -213,5 +267,3 @@ router.get('/friend-book/logout', function(req, res){
 // );
 
 module.exports = router;
-
-
