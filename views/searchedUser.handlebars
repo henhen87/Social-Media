@@ -1,0 +1,26 @@
+{{#if people}}
+	{{#each people}}
+		<div class="media">
+		  <div class="media-left media-middle">
+		      <img class="media-object" src="/assets/images/hen.jpg" alt="hen">
+		  </div>
+		  <div class="media-body">
+		    <h4 class="media-heading">{{this.name}}</h4>
+		    <h4 class="media-heading">{{this.email}}</h4>
+		    <h4 class="media-heading">{{this.id}}</h4>
+		    <form method="POST" action="/friend-book/profile?member_id={{this.id}}">
+                <input type="hidden" name="profileID" value="{{this.id}}">
+                <button type="submit">Profile Page</button>
+            </form>
+	        <form method="POST" action"/friend-book/requests">
+                <input type="hidden" name="FriendID" value="{{this.id}}">
+                <button type="submit">I want to be friends</button>
+            </form>
+		  </div>
+		</div>
+		{{else}}
+		  <div class="media-body">
+		    <h4 class="media-heading">No one by that name</h4>
+		  </div>
+	{{/each}}
+{{/if}}

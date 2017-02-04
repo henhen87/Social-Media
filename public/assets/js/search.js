@@ -8,3 +8,7 @@ window.location.href = '/friend-book/personresults/' + personSearch;
 
 });
 
+$('#searchall').on('click', function(e){
+	e.preventDefault();
+	window.location.href = '/friend-book/searchall/'
+})

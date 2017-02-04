@@ -1,12 +1,61 @@
 <div class="row">
-  <div class="col-sm-6 col-md-4">
+  <div class="col-sm-6 col-md-4 col-lg-9">
     <div class="thumbnail">
-      <img style="float:left;" src="/assets/images/hen.jpg" alt="cat" class="img-circle" width="400px" height="300px/">
+      <img src="/assets/images/hen.jpg" alt="cat" class="img-circle" width="400px" height="400px"/>
       <div class="caption">
-        <h3 style="margin-left: 105px;">Thumbnail label</h3>
-        <p>...</p>
-        <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
+        <h3 class="profileName">Name: {{userInfo.name}}</h3>
+        <h2 class="profileEmail">Email: {{userInfo.email}}</h2>
+        <h2 class="profileDescription">Description: {{userInfo.description}} </h2>
+      </div>
+      <div>
+        <h1 class="wall"> {{userInfo.name}}'s Wall</h1>
+        <div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">News Feed</h3>
+  </div>
+  <div class="panel-body">
+    <div class="row">
+  <div class="col-lg-12">
+    <div class="input-group">
+      <input id="inputpost" type="text" class="form-control" placeholder="What's On Your Mind...">
+      <span class="input-group-btn">
+        <button id="post" class="btn btn-default" type="button">Post!</button>
+      </span>
+    </div><!-- /input-group -->
+  </div><!-- /.col-lg-6 -->
+</div><!-- /.row -->
+  </div>
+</div>
+
+
+<div id="messages" class="media" style="display: none;">
+  <div class="media-left media-middle">
+    
+     
+   
+  </div>
+ 
+  <div class="media-body">
+    <h4 class="media-heading"></h4>
+   
+  </div>
+ 
+</div>
+      </div>
       </div>
     </div>
+
+  <div class="col-sm-6 col-md-4 col-lg-9">
+    {{this.userInfo.username}}'s friends:
+
+    {{#each userFriend}}
+    <ul>
+      <li>user:{{this.name}}</li>
+      <li>email:{{this.email}}</li>
+      <li>description:{{this.description}}</li>
+    </ul>
+    {{/each}}
   </div>
+
+    
 </div>

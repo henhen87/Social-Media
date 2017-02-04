@@ -1,17 +1,15 @@
-<div class="container">
-<div class="header" style="margin-left: 150px;">
-  <ul class="nav nav-tabs">
-  <li role="presentation"><a href="/friend-book/register">Home</a></li>
-  	<li role="presentation"><a href="/friend-book/search">Search</a></li>
-	  <li role="presentation" class="active"><a href="/friend-book/login">Login</a></li>
-	  <li role="presentation"><a href="/friend-book/register">Register</a></li>
-  </ul>
- <form action="/friend-book/login" method="POST">
- 
-	  <input id="username" name="username" type="text" class="form-control-2" placeholder="Enter Username" aria-describedby="basic-addon2">
 
-	  <input id="password" name="password" type="password" class="form-control-3" placeholder="Enter Password" aria-describedby="basic-addon3">
 
-	  <button type="submit" id="login">Login</button>
+
+  
+  <form action="/friend-book/login" method="POST" class="form-signin">
+    <h2 class="form-signin-heading">Please sign in</h2>
+    <label for="inputUsername" class="sr-only">Username</label>
+    <input type="text" name="username" id="inputUsername" class="form-control" placeholder="Username" required autofocus>
+    <label for="inputPassword" class="sr-only">Password</label>
+    <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
   </form>
-  </div>
+
+
+
