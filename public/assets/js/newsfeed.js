@@ -1,5 +1,5 @@
 $(document).ready(function() {
-       
+       // 'https://stark-crag-86811.herokuapp.com/friend-book/profile'
    if (window.location.href.indexOf('https://stark-crag-86811.herokuapp.com/friend-book/profile') > -1) {
        // your $.get here
        $.get("/friend-book/all", function(data) {
@@ -23,6 +23,7 @@ $(document).ready(function() {
            $('#messages').fadeIn();
 
        });
+   };
 
 
        var click = 0;
@@ -37,53 +38,40 @@ $(document).ready(function() {
 
            console.log(newPost)
 
-           $.post("/friend-book/home", newPost)
-               // On success, run the following code
-               .done(function() {
+           $.post("/friend-book/home", newPost).done(function() {
+            
+                 $.get("/friend-book/all", function(data) {
+                     $(".media-body").empty()
 
-                   // var row = $("<div>");
-                   // row.addClass("chirp");
+                     console.log(data);
 
-                   // row.append("<p>" + newChirp.author + " chirped: </p>");
-                   // row.append("<p>" + newChirp.body + "</p>");
-                   // row.append("<p>At " + moment(newChirp.created_at).format("h:mma on dddd") + "</p>");
+                     if (data.length !== 0) {
 
-                   // $("#chirp-area").prepend(row);
+                         for (var i = data.length-1; i > -1; i--) {
 
+                             var row = $(".media-body");
+                             // row.addClass("media-body");
+                             row.append("<h4>" + data[i].body + "</h4>");
+                             console.log(data[i].created_at)
+                             console.log(data[i].createdAt)
+
+                             row.append("<p>At " + moment(data[i].createdAt).format("h:mma on dddd") + "</p>");
+                         }
+                     }
+                     $('#messages').fadeIn();
+                 });
                });
-
-           $.get("/friend-book/all", function(data) {
-               $(".media-body").empty()
-
-               console.log(data);
-
-               if (data.length !== 0) {
-
-                   for (var i = data.length-1; i > -1; i--) {
-
-                       var row = $(".media-body");
-                       // row.addClass("media-body");
-                       row.append("<h4>" + data[i].body + "</h4>");
-                       console.log(data[i].created_at)
-                       console.log(data[i].createdAt)
-
-                       row.append("<p>At " + moment(data[i].createdAt).format("h:mma on dddd") + "</p>");
-
-
-
-                   }
-
-               }
-
-
-
-
-               $('#messages').fadeIn();
-
-
-           });
 
        });
 
-   };
 });
+
+
+
+
+
+
+
+
+
+

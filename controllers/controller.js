@@ -84,6 +84,17 @@ router.get('/friend-book/register', function(req, res){
 });
 
 
+router.get('/friend-book/search/all', function(req, res){
+
+	db.users.findAll({}).then(function(data){
+		var allUsers = {
+				people: data
+			}
+
+		res.render('searchedUser', allUsers)
+	});
+});
+
 router.post('/friend-book/search/user', function(req, res){
 	console.log('req.body', req.body);
 	db.users.findAll({
