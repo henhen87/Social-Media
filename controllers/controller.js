@@ -243,26 +243,31 @@ router.get('/friend-book/logout', function(req, res){
 
 router.post('/friend-book/requests', function(req, res) {
 	console.log('post request');
-	console.log('userID', req.session.user.id);
+	// console.log('userID', req.session.user.id);
 	console.log('friendID', req.body.FriendID);
 
+	if(req.session.user){
 
-	db.Friends.create({
-		status: "friends",
-		userId: req.session.user.id,
-		FriendId: req.body.FriendID
-	}).then(function(data){
-		console.log(data);
-		//res.json(data)
-		var toEmail = req.body.friendReqEmail;
-		var toEmailName = req.session.user.name;
-		console.log("To Email", toEmail);
-		console.log("To Email Req", req.body.friendReqEmail);
-		email.send(toEmail, toEmailName, function(){
-			// res.redirect('/contact');	
-			res.redirect('/friend-book/profile');
+		db.Friends.create({
+			status: "friends",
+			userId: req.session.user.id,
+			FriendId: req.body.FriendID
+		}).then(function(data){
+			console.log(data);
+			//res.json(data)
+			var toEmail = req.body.friendReqEmail;
+			var toEmailName = req.session.user.name;
+			console.log("To Email", toEmail);
+			console.log("To Email Req", req.body.friendReqEmail);
+			email.send(toEmail, toEmailName, function(){
+				// res.redirect('/contact');	
+				res.redirect('/friend-book/profile');
+			});
 		});
-	});
+	}else{
+		res.redirect('/friend-book/login');
+	}
+
 });
 
 
