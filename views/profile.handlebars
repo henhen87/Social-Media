@@ -1,39 +1,23 @@
 <div class="row">
-<<<<<<< HEAD
-  <div class="col-sm-4 col-md-4">
-=======
   <div class="col-sm-6 col-md-4 col-lg-9">
->>>>>>> e0041f8191a8734e540a373178f82eb3b2d7b272
     <div class="thumbnail">
       <img src="/assets/images/hen.jpg" alt="cat" class="img-circle" width="400px" height="400px"/>
       <div class="caption">
-<<<<<<< HEAD
-        <h3 style="padding-top: 15px;">Name: {{this.userInfo.name}}</h3>
-        <h2>Email Address: {{this.userInfo.email}}</h2>
-        <h2>Description: {{this.userInfo.description}} </h2>
+        <h3 class="profileName">Name: {{this.userInfo.name}}</h3>
+        <h2 class="profileEmail">Email: {{this.userInfo.email}}</h2>
+        <h2 class="profileDescription">Description: {{this.userInfo.description}} </h2>
       </div>
       <div>
-        <h1> {{this.userInfo.username}}'s Wall</h1>
-        <div>
-          Need to decide how messages users wall will be displayed.
-=======
-        <h3 class="profileName">Name: {{name}}</h3>
-        <h2 class="profileEmail">Email: {{email}}</h2>
-        <h2 class="profileDescription">Description: {{description}} </h2>
-      </div>
-      <div>
-        <h1 class="wall"> {{name}}'s Wall</h1>
+        <h1 class="wall"> {{this.userInfo.name}}'s Wall</h1>
         <div class="panel panel-default">
           <div class="panel panel-primary">...</div>
           <div class="panel-footer">Panel footer</div>
->>>>>>> e0041f8191a8734e540a373178f82eb3b2d7b272
         </div>
       </div>
       </div>
     </div>
-  </div>
 
-  <div class="col-sm-4 col-md-4">
+  <div class="col-sm-6 col-md-4 col-lg-9">
     {{this.userInfo.username}}'s friends:
 
     {{#each userFriend}}
@@ -45,18 +29,5 @@
     {{/each}}
   </div>
 
-  <div class="col-sm-4 col-md-4">
-    {{this.userInfo.username}}'s messages:
-
-    {{#each userMsg}}
-    <ul>
-      <li>from: {{this.name}} </li>
-      <li>message: {{this.Messages.message}} </li>
-      <li>createdAt: {{this.Messages.createdAt}} </li>
-    </ul>
-    {{/each}}
-  </div>
-
-
-
+    
 </div>
