@@ -1,34 +1,48 @@
-// $(document).ready(function(){
+$(document).ready(function(){
 
-// 	$('#register').click(function(){
-
-// 		if($('#name').val() === null || $('#name').val() === '' || $('#username').val() === null || 
-// 			$('#username').val() === '' || $('#password').val() === null || $('#password').val() === '' ||
-// 			$('#email').val() === null || $('#email').val() === '' || $('#description').val() === null ||
-// 			$('#description').val() === ''){
-
-// 			alert("Fill out all fields.");
-// 			return;
-// 		}
-
-// 		if($('#password').val() !== $('#password2').val()){
-// 			alert("Passwords do not match");
-// 			return;
-// 		}
+  $("#file-input").onchange = () => {
+    const files = $('#file-input').files;
+    const file = files[0];
+    if(file == null){
+      return alert('No file selected.');
+    }
+    getSignedRequest(file);
+  }
 
 
-// 		var userInfo = {
-// 			name: $('#name').val().trim(),
-// 			username: $('#username').val().trim(),
-// 			password: $('#password').val().trim(),
-// 			email: $('#email').val().trim(),
-// 			description: $('#description').val().trim()
-// 		}
+  function getSignedRequest(file){
+  const xhr = new XMLHttpRequest();
+  xhr.open('GET', `/sign-s3?encodeURIComponent(file.name)&file-name=${file.name}&file-type=${file.type}`);
+  xhr.onreadystatechange = () => {
+	    if(xhr.readyState === 4){
+	      if(xhr.status === 200){
+	        const response = JSON.parse(xhr.responseText);
+	        uploadFile(file, response.signedRequest, response.url);
+	      }
+	      else{
+	        alert('Could not get signed URL.');
+	      }
+	    }
+	  };
+	  xhr.send();
+	}
 
-// 		$.post('/friend-book/register', userInfo).then(function(data) {
-// 			console.log(data);
-// 			window.location.href = data.url;
-// 		})
-// 	});
 
-// });
+  function uploadFile(file, signedRequest, url){
+  const xhr = new XMLHttpRequest();
+  xhr.open('PUT', signedRequest);
+  xhr.onreadystatechange = () => {
+	    if(xhr.readyState === 4){
+	      if(xhr.status === 200){
+	        $('#preview').src = url;
+	        $('#avatar-url').value = url;
+	      }
+	      else{
+	        alert('Could not upload file.');
+	      }
+	    }
+	  };
+	  xhr.send(file);
+	}
+
+});

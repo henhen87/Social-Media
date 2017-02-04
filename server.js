@@ -11,11 +11,20 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var expressValidator = require("express-validator");
 var flash = require("connect-flash");
+var aws = require('aws-sdk');
 
+var app = express();
+
+app.set('views', './views');
+// app.use(express.static('./public'));
+// Static directory
+app.use(express.static("./public"));
+app.engine('html', require('ejs').renderFile);
+var PORT = process.env.PORT || 8080;
+
+const S3_BUCKET = process.env.S3_BUCKET;
 // Sets up the Express App
 // =============================================================
-var app = express();
-var PORT = process.env.PORT || 8080;
 
 // Requiring our models for syncing
 var db = require("./models");
@@ -55,8 +64,6 @@ app.use(expressValidator({
 
 
 
-// Static directory
-app.use(express.static("./public"));
 
 passport.use(new LocalStrategy(
   function(username, password, done) {
