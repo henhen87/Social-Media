@@ -175,14 +175,14 @@ router.post('/friend-book/register', function(req, res){
 				db.users.create(req.body).then(function(data){
 					console.log("register data", data);
 					
-					console.log("poop", data.id);
-					req.session.user = {
-						id: data.id,
-						name: data.name,
-						username: data.username,
-						email: data.email,
-						description: data.description
-					};
+					// console.log("poop", data.id);
+					// req.session.user = {
+					// 	id: data.id,
+					// 	name: data.name,
+					// 	username: data.username,
+					// 	email: data.email,
+					// 	description: data.description
+					// };
 
 					req.flash('success_msg', 'Success! Welcome to Book Face! Please login.');
 
