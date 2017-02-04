@@ -44,7 +44,9 @@ router.post('/friend-book/profile', function(req, res){
 	}).then(function(data){
 		console.log("profile data", data);
 		var userObj = {
-			theData: data
+			name: data.name,
+			email: data.email,
+			description: data.description
 		}
 		res.render('profile', userObj);
 		
@@ -52,11 +54,14 @@ router.post('/friend-book/profile', function(req, res){
 });
 
 router.get('/friend-book/login', function(req, res){
-	res.render('login');
+	var messages = {
+		success: req.flash('success_msg')
+	}
+	res.render('login', messages /*{messages: req.flash('success_msg')} //Alternate */);
 });
 
 router.get('/friend-book/register', function(req, res){
-	res.render('register');
+	res.render('register', {existsMsg: req.flash('Exists')});
 });
 
 // router.get('/friend-book/search/results', function(req, res){
@@ -136,36 +141,36 @@ router.post('/friend-book/register', function(req, res){
 	}else{
 	//if no errors, create user in database then render user data onto profile page.
 
-		// db.users.findOne({
-		// 	where: {
-		// 		username: req.body.username,
-		// 		email: req.body.email
-		// 	}
-		// }).then(function(data){
-		// 	if(data){
+		db.users.findOne({
+			where: {
+				username: username
+			}
+		}).then(function(data){
+			if(data){
+				req.flash('Exists', 'Username already exists. Choose another.');
+				res.redirect('/friend-book/register');
+			}else{
 
-		// 	}else{
+				db.users.create(req.body).then(function(data){
+					console.log("register data", data);
+					
+					console.log("poop", data.id);
+					req.session.user = {
+						id: data.id,
+						name: data.name,
+						username: data.username,
+						email: data.email,
+						description: data.description
+					};
 
-		// 	}
-		// })
-			db.users.create(req.body).then(function(data){
-				console.log("register data", data);
-				
-				console.log("poop", data.id);
-				req.session.user = {
-					id: data.id,
-					name: data.name,
-					username: data.username,
-					email: data.email,
-					description: data.description
-				};
+					req.flash('success_msg', 'Success! Welcome to Book Face!');
 
-				req.flash('success_msg', 'Success! Welcome to Book Face!');
+					// res.render("profile", req.session.user);
+					res.redirect('/friend-book/login')
 
-				// res.render("profile", req.session.user);
-				res.redirect('/friend-book/login')
-
-			});
+				});
+			}
+		})
 	}
 //***************************************************************************************************
 });
@@ -178,7 +183,8 @@ router.post('/friend-book/login',
   	{ 
   		successRedirect: '/friend-book',
         failureRedirect: '/friend-book/login',
-        failureFlash: true 
+        failureFlash: 'Invalid username and password. Self destructing in 5 seconds!',
+        successFlash: 'You have successfully logged in. Welcome to Book Face!' 
     })
   );
 
@@ -186,10 +192,10 @@ router.get('/friend-book/logout', function(req, res){
 	req.logOut();
 	console.log('req.session in get method', req.session);
 	console.log('req.session.user in get method', req.session.user);
-	// req.session.destroy(function(err){
+	req.session.destroy(function(err){
 		res.redirect('/friend-book/login');
 		
-	// });
+	});
 });
 
 // app.post('/friend-book/register',

@@ -127,7 +127,6 @@ app.use(flash());
 
 app.use(function(req, res, next){
 	//res.locals has global scope.
-	res.locals.succes_msg = req.flash('succes_msg');
 	res.locals.error_msg = req.flash('error_msg');
 	res.locals.error = req.flash('error');
 	//This had to be req.user instead of req.session, since user is what gets returns from the passport
