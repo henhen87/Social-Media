@@ -75,12 +75,15 @@ db.users.findAll({
 router.get('/friend-book/all', function(req, res){
 
 db.events.findAll({
-    body: req.body.post
+	//    body: req.body.post,
+	where: {
+		userId: req.session.user.id
+	}
   })
     // pass the result of our call
   .then(function(post) {
       // log the result to our terminal/bash window
-    console.log(post);
+    console.log('THIS IS MY POST', post);
       // redirect
     res.send(post)
   });

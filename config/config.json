@@ -2,7 +2,7 @@
   "development": {
     "username": "root",
 
-    "password": "Khatibi1!2",
+    "password": "password",
     "database": "moviesdb",
 
     "host": "127.0.0.1",
