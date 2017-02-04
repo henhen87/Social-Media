@@ -42,6 +42,7 @@ router.post('/friend-book/home', function(req, res){
 	console.log(req.body.post)
 
 db.events.create({
+	userId: req.session.user.id,
     body: req.body.post
   })
     // pass the result of our call
