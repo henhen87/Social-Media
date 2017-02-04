@@ -213,6 +213,26 @@ router.get('/friend-book/logout', function(req, res){
 	});
 });
 
+router.post('/friend-book/requests', function(req, res) {
+	console.log('post request');
+	console.log('userID', req.session.user.id);
+	console.log('friendID', req.body.FriendID);
+
+
+	db.Friends.create({
+		status: "friends",
+		userId: req.session.user.id,
+		FriendId: req.body.FriendID
+	}).then(function(data){
+		console.log(data);
+		//res.json(data);
+		res.redirect('/friend-book/profile');
+	});
+});
+
+
+
+
 // app.post('/friend-book/register',
 //   passport.authenticate('local', { successRedirect: '/',
 //                                    failureRedirect: '/login',
@@ -220,5 +240,3 @@ router.get('/friend-book/logout', function(req, res){
 // );
 
 module.exports = router;
-
-

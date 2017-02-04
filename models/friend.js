@@ -11,10 +11,10 @@ module.exports = function(sequelize, DataTypes) {
           Friends.belongsTo(models.users,
             {
               onDelete: "cascade",
-              foreignKey: {
+/*              foreignKey: {
                 allowNull: false
               }
-            });
+*/            });
         }
       }
     });
