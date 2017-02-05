@@ -8,6 +8,10 @@ body {
   display: none;
 }
 
+#main-heading{
+  /*color: #3366ff;*/
+  background-color: #3366ff;
+}
 .media-object{
   width: 500px;
   height: 310px;
