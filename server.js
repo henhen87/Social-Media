@@ -128,7 +128,7 @@ app.use(function(req, res, next){
 	res.locals.error = req.flash('error');
 	//This had to be req.user instead of req.session, since user is what gets returns from the passport
 	//deserialize function.
-	res.locals.user = req.user || null;
+	res.locals.guy = req.user || null;
 	
   if (req.user) {
     req.session.user = {
@@ -136,7 +136,8 @@ app.use(function(req, res, next){
       name: req.user.name,
       username: req.user.username,
       email: req.user.email,
-      description: req.user.description
+      description: req.user.description,
+      img: req.user.img
     };
   }
 

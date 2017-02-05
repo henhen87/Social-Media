@@ -6,7 +6,8 @@ module.exports = function(sequelize, DataTypes){
 		username: DataTypes.STRING,
 		password: DataTypes.STRING,
 		email: DataTypes.STRING,
-		description: DataTypes.STRING
+		description: DataTypes.STRING,
+		img: DataTypes.STRING
 	}, {
 		//Instance methods can only be used when certain instances of sequelized are used such as create. Not
 		//all instances of sequelize can use instance methods.

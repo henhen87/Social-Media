@@ -56,7 +56,8 @@ router.post('/friend-book/profile', function(req, res){
 			name: data[0].name,
 			username: data[0].username,
 			email: data[0].email,
-			description: data[0].description
+			description: data[0].description,
+			img: data[0].img
 		};
 
 		var userObj = {
