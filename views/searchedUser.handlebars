@@ -2,7 +2,11 @@
 	{{#each people}}
 		<div class="media">
 		  <div class="media-left media-middle">
-		      <img class="media-object" src="{{this.img}}" alt="hen">
+		  	{{#if this.img}}	
+		  	    <img class="media-object" src="{{this.img}}" alt="hen">
+		  	{{else}}
+		  		<img class="media-object" src="/assets/images/hen.jpg" alt="hen">
+		  	{{/if}}
 		  </div>
 		  <div class="media-body">
 		    <h4 class="media-heading">{{this.name}}</h4>
@@ -19,9 +23,5 @@
             </form>
 		  </div>
 		</div>
-		{{else}}
-		  <div class="media-body">
-		    <h4 class="media-heading">No one by that name</h4>
-		  </div>
 	{{/each}}
 {{/if}}
