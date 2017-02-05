@@ -122,6 +122,8 @@ app.use(passport.session());
 
 app.use(flash());
 
+
+
 app.use(function(req, res, next){
 	//res.locals has global scope.
 	res.locals.error_msg = req.flash('error_msg');

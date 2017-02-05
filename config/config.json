@@ -1,14 +1,14 @@
 {
   "development": {
     "username": "root",
-    "password": "henCoco87!",
+    "password": "password",
     "database": "moviesDB",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
   "test": {
     "username": "root",
-    "password": "henCoco87!",
+    "password": "password",
     "database": "moviesDB",
     "host": "127.0.0.1",
     "dialect": "mysql"
